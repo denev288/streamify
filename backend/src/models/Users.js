@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    firends: [{
+    friends: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],

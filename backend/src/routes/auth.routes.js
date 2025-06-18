@@ -8,7 +8,7 @@ router.post('/signup', signup);
 router.post('/login', login);
 router.post('/logout', logout);
 
-router.post("/onboard", protectRoute, onboard);
+router.post("/onboarding", protectRoute, onboard);
 
 //check if user is logged in
 router.get('/me', protectRoute, (req, res) => {
