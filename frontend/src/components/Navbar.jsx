@@ -3,11 +3,20 @@ import useAuthUser from "../hooks/useAuthUser";
 import { BellIcon, LogOutIcon, ShipWheelIcon } from "lucide-react";
 import ThemeSelector from "./ThemeSelector";
 import useLogout from "../hooks/useLogout";
+import { getFriendRequests } from "../lib/api";
+import { useQuery } from "@tanstack/react-query";
 
 const Navbar = () => {
   const { authUser } = useAuthUser();
   const location = useLocation();
   const isChatPage = location.pathname?.startsWith("/chat");
+
+  const { data: friendRequests, isLoading } = useQuery({
+    queryKey: ["friendRequests"],
+    queryFn: getFriendRequests,
+  });
+
+  const incomingRequests = friendRequests?.incomingReqs || [];
 
   // const queryClient = useQueryClient();
   // const { mutate: logoutMutation } = useMutation({
@@ -35,8 +44,15 @@ const Navbar = () => {
 
           <div className="flex items-center gap-3 sm:gap-4 ml-auto">
             <Link to={"/notifications"}>
-              <button className="btn btn-ghost btn-circle">
+              <button className="btn btn-ghost btn-circle relative">
                 <BellIcon className="h-6 w-6 text-base-content opacity-70" />
+                {incomingRequests.length > 0 && (
+                  <span className="absolute top-1 right-1">
+                    <span className="badge badge-primary badge-sm">
+                      {incomingRequests.length}
+                    </span>
+                  </span>
+                )}
               </button>
             </Link>
           </div>
@@ -46,7 +62,11 @@ const Navbar = () => {
 
           <div className="avatar">
             <div className="w-9 rounded-full">
-              <img src={authUser?.profilePic} alt="User Avatar" rel="noreferrer" />
+              <img
+                src={authUser?.profilePic}
+                alt="User Avatar"
+                rel="noreferrer"
+              />
             </div>
           </div>
 
