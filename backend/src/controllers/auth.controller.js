@@ -28,7 +28,7 @@ export async function signup(req, res) {
     }
 
     const index = Math.floor(Math.random() * 100) + 1; //generate num between 1 and 100
-    const randomAvatar = `https://avatar.iran.liara.run/public/${index}.png `;
+    const randomAvatar = `https://mighty.tools/mockmind-api/content/human/${index}.jpg`;
     const newUser = new User({
       email,
       password,
